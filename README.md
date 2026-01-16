@@ -32,21 +32,7 @@ Este projeto foi criado com foco em **boas práticas**, **organização de códi
 - **HTML5**
 - **CSS3**
 - **SQLite (ambiente de desenvolvimento)**
-
----
-
-## 📁 Estrutura do Projeto
-
-django/
-├── danada/ # Projeto Django (settings, urls)
-├── login/ # App principal
-│ ├── migrations/
-│ ├── templates/
-│ ├── views.py
-│ ├── urls.py
-│ └── models.py
-├── manage.py
-└── .gitignore
+  
 ---
 
 ## 🔐 Controle de Acesso
