@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        body { font-family: Arial; padding: 20px; text-align: center; }
+        .success { color: green; font-size: 24px; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 10px; background: #007bff; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; }
+        .home { background: #007bff; }
+        .logout { background: #6c757d; }
+        .admin { background: #dc3545; }
+        .messages { margin: 20px 0; padding: 10px; }
+        .error { background: #f8d7da; color: #721c24; }
+        .success-msg { background: #d4edda; color: #155724; }
+        </style>
+        </head>
+        <body>
+    <h1 class="success">✅ Login Bem Sucedido!</h1>
+    <p>Olá, <strong>{{ user.username }}</strong>! Você está logado.</p>
+    
+    <div>
+        <a href="{% url 'home' %}" class="btn">🏠 Home</a>
+        <form method="post" action="{% url 'logout_view' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 10px 20px; background: #6c757d; color: white; border: none;">🚪 Sair</button>
+        </form>
+    </div>
+</body>
+</html>

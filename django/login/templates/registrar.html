@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar</title>
+      <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        .btn { padding: 10px 20px; background: #28a745; color: white; border: none; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Registrar</h1>
+        
+        {% for message in messages %}
+            <p class="error">{{ message }}</p>
+        {% endfor %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit" class="btn">Criar Conta</button>
+        </form>
+        
+        <p><a href="{% url 'login' %}">Já tem conta? Login</a> | <a href="{% url 'home' %}">Voltar</a></p>
+    </div>
+</body>
+</html>

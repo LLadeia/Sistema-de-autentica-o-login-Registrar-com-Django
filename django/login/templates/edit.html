@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuário</title>
+        <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        .btn { padding: 10px 20px; margin: 5px; }
+        .save { background: #28a745; color: white; }
+        .back { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✏️ Editar {{ user.username }}</h1>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" value="{{ user.username }}" required>
+            <input type="email" name="email" value="{{ user.email }}" required>
+            
+            <label>
+                <input type="checkbox" name="is_superuser" {% if user.is_superuser %}checked{% endif %}>
+                Superusuário
+            </label>
+            
+            <button type="submit" class="btn save">💾 Salvar</button>
+            <a href="{% url 'admin' %}" class="btn back">↩️ Voltar</a>
+        </form>
+    </div>
+</body>
+</html>
+403.html

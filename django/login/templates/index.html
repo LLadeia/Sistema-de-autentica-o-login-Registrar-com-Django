@@ -1,0 +1,89 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Bem-vindo</title>
+        <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; text-align: center; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 10px; text-decoration: none; color: white; border-radius: 5px; }
+        .login { background: #007bff; }
+        .register { background: #28a745; }
+        .admin { background: #dc3545; }
+        .user { background: #6c757d; }
+        .messages { margin: 20px 0; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+        .success { color: green; background: #d4edda; padding: 10px; border-radius: 5px; }
+        .error { color: #721c24; background: #f8d7da; padding: 10px; border-radius: 5px; }
+        .warning { color: #856404; background: #fff3cd; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Sistema de Login</h1>
+        <p>Sistema simples de autenticação</p>
+        
+        <!-- Mensagens do sistema -->
+        <div class="messages">
+            {% for message in messages %}
+                <div class="{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        
+        {% if user.is_authenticated %}
+            <p>Olá, <strong>{{ user.username }}</strong>!</p>
+            <p>Status: 
+                {% if user.is_superuser %}
+                    <span style="color: red; font-weight: bold;">👑 Superusuário</span>
+                {% else %}
+                    <span style="color: blue;">👤 Usuário Normal</span>
+                {% endif %}
+            </p>
+            
+            <div style="margin: 20px 0;">
+                <!-- Link para Admin (APENAS para superusuários) -->
+                {% if user.is_superuser %}
+                    <a href="{% url 'admin' %}" class="btn admin">⚙️ Área Admin</a>
+                {% endif %}
+                
+                <!-- Link para Sucess (para todos) -->
+                <a href="{% url 'suces' %}" class="btn login">📋 Minha Área</a>
+                
+                <!-- Logout -->
+                <a href="{% url 'logout_view' %}" class="btn user">🚪 Sair</a>
+            </div>
+            
+        {% else %}
+            <!-- Usuário NÃO autenticado -->
+            <p>Você não está logado. Escolha uma opção:</p>
+            
+            <div style="margin: 20px 0;">
+                <a href="{% url 'login' %}" class="btn login">🔑 Login</a>
+                <a href="{% url 'register' %}" class="btn register">📝 Registrar</a>
+                
+                <!-- Link para Admin (visível, mas vai mostrar erro se tentar acessar) -->
+                <a href="{% url 'admin' %}" class="btn admin">⚙️ Admin</a>
+            </div>
+            
+            <p style="font-size: 12px; color: #666;">
+                <em>Dica: O link "Admin" só funciona para superusuários.</em>
+            </p>
+        {% endif %}
+        
+        <!-- Informação sobre como criar superusuário -->
+        {% if not user.is_authenticated %}
+        <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+            <h3>🛠️ Para testar como Superusuário:</h3>
+            <p style="text-align: left;">
+                1. Execute no terminal:<br>
+                <code>python manage.py createsuperuser</code><br><br>
+                2. Siga as instruções para criar<br>
+                3. Faça login com essas credenciais
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

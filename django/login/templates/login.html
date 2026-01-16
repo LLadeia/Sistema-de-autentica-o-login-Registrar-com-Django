@@ -1,0 +1,32 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+     <head>
+         <meta charset="UTF-8"> 
+         <title>Login</title> 
+        </head>
+            <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        .btn { padding: 10px 20px; background: #007bff; color: white; border: none; }
+        .error { color: red; }
+    </style>
+<body>
+    <div class="container">
+        <h1>🔑 Login</h1>
+        
+        {% for message in messages %}
+            <p class="error">{{ message }}</p>
+        {% endfor %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+        
+        <p><a href="{% url 'register' %}">Criar conta</a> | <a href="{% url 'home' %}">Voltar</a></p>
+    </div>
+</body>
+</html>
