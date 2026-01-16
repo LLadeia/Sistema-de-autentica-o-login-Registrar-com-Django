@@ -63,12 +63,10 @@
                 <a href="{% url 'login' %}" class="btn login">🔑 Login</a>
                 <a href="{% url 'register' %}" class="btn register">📝 Registrar</a>
                 
-                <!-- Link para Admin (visível, mas vai mostrar erro se tentar acessar) -->
-                <a href="{% url 'admin' %}" class="btn admin">⚙️ Admin</a>
             </div>
             
             <p style="font-size: 12px; color: #666;">
-                <em>Dica: O link "Admin" só funciona para superusuários.</em>
+                <em>Dica: O Painel "Admin" só funciona para superusuários.</em>
             </p>
         {% endif %}
         

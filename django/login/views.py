@@ -88,6 +88,9 @@ def editar_usuario(request, user_id):
     if request.method == 'POST':
         user.username = request.POST.get('username')
         user.email = request.POST.get('email')
+        user_password = request.POST.get('password')
+        if user_password:
+            user.set_password(user_password)
         
         # Só atualiza is_superuser se não for o próprio usuário
         if user.id != request.user.id:

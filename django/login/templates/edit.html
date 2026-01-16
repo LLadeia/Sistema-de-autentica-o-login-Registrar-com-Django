@@ -20,16 +20,10 @@
             {% csrf_token %}
             <input type="text" name="username" value="{{ user.username }}" required>
             <input type="email" name="email" value="{{ user.email }}" required>
-            
-            <label>
-                <input type="checkbox" name="is_superuser" {% if user.is_superuser %}checked{% endif %}>
-                Superusuário
-            </label>
-            
+            <input type="password" name="password" placeholder="Nova Senha (deixe em branco para manter a atual)" required>
             <button type="submit" class="btn save">💾 Salvar</button>
             <a href="{% url 'admin' %}" class="btn back">↩️ Voltar</a>
         </form>
     </div>
 </body>
 </html>
-403.html
