@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+from .serializers import UserSerializer
+from django.http import JsonResponse
+
 # Home pública
 def home(request):
     return render(request, 'index.html')
@@ -125,3 +133,9 @@ def logout_view(request):
         messages.success(request, f'Até logo, {request.user.username}!')
     auth_logout(request)
     return redirect('home')
+
+@api_view(['GET'])
+def user_list(request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)

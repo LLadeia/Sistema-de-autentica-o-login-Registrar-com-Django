@@ -10,6 +10,5 @@ urlpatterns = [
     path('admin/', views.admin, name='admin'),
     path('editar/<int:user_id>/', views.editar_usuario, name='editar'),
     path('deletar/<int:user_id>/', views.deletar_usuario, name='deletar'),
-    
     path('suces/', views.suces, name='suces'),
 ]
