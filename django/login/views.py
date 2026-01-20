@@ -134,8 +134,36 @@ def logout_view(request):
     auth_logout(request)
     return redirect('home')
 
-@api_view(['GET'])
-def user_list(request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+@api_view(['GET', 'POST'])
+def user_list_create(request):
+        if request.method == 'GET':
+            users = User.objects.all()
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data)
+        elif request.method == 'POST':
+            serializer = UserSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=201)
+            return Response(serializer.errors, status=400)
+        
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def user_detail(request, id):
+        try:
+            user = User.objects.get(id=id)
+        except User.DoesNotExist:
+            return Response(status=404)
+        
+        if request.method == 'GET':
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = UserSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=400)
+        elif request.method == 'DELETE':
+            user.delete()
+            return Response(status=204)
