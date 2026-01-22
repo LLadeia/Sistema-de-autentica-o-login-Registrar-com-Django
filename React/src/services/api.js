@@ -27,3 +27,9 @@ export const atualizarUser = async (id, dados) => {
 
   return response.data;
 };
+
+export default {
+  listarUsers,
+  deletarUser,
+  atualizarUser,
+};
