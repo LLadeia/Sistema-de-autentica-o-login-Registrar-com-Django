@@ -1,41 +1,24 @@
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { atualizarUser } from "../services/api";
+import { useState } from "react";
 
-function EditarUser({ user, onAtualizado }) {
-  const [nome, setNome] = useState(user.nome);
-  const [email, setEmail] = useState(user.email);
-  const [senha, setSenha] = useState(user.senha);
+function Editar() {
+  const { id } = useParams();
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
-  const [preview, setPreview] = useState(null);
-
-
-    async function handleSubmit(e) {
-    await atualizarUser(user.id, {
-      nome,
-        email,
-        senha,
-    });
-
-    onAtualizado();
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await atualizarUser(id, { username });
+    navigate("/admin");
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        value={nome}
-        onChange={e => setNome(e.target.value)}
-      />
-      <input
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-      <input
-        value={senha}
-        onChange={e => setSenha(e.target.value)}
-      />
-      <button type="submit">💾 Salvar</button>
+      <input onChange={e => setUsername(e.target.value)} />
+      <button>Salvar</button>
     </form>
   );
 }
 
-export default EditarUser;
+export default Editar;

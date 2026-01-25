@@ -7,9 +7,9 @@ import Registrar from "./pages/Registrar.jsx";
 function Menu() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registrar" element={<Registrar />} />
+      <Route path="/Home" element={<Home />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Registrar" element={<Registrar />} />
     </Routes>
   );
 }

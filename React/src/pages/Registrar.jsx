@@ -1,23 +1,44 @@
-import { Link } from "react-router-dom";
-import {  listarUsers, deletarUser } from "../services/api";
-import Form from "../components/Form.jsx"
-
+import { useNavigate , Link } from "react-router-dom";
+import { criarUser } from "../services/api";
+import useForm from "../components/useForm";
 
 function Registrar() {
-  return (
-    <div>
-      <h1>Página Registrar</h1>
+  const navigate = useNavigate();
 
-      <div className="Registrar">
-        <input type="text" placeholder="Usuário" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Senha" />
-        <button type="submit">Registrar</button>
-        </div>
-      <Link to="/">Ir para Home</Link>
-      <Link to="/login">Ir para Login</Link>
-    </div>
+  const onSubmit = async (data) => {
+    await criarUser(data);
+    navigate("/login");
+  };
+
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    loading,
+  } = useForm(
+    { username: "", email: "", password: "" },
+    onSubmit
   );
+
+  return (
+    <form onSubmit={handleSubmit}>
+       <div>
+      <h1>Registrar</h1>
+      <input name="username" onChange={handleChange} />
+      <input name="email" onChange={handleChange} />
+      <input type="password" name="password" onChange={handleChange} />
+
+      <button disabled={loading}>Registrar</button>
+
+    <div>
+    <Link to="/Home">Ir para Home</Link>
+    <Link to="/Login">Ir para Login</Link>
+    </div>
+    </div>
+
+    </form>
+  );
+
 }
 
 export default Registrar;

@@ -1,35 +1,13 @@
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:8000/api/users/";
+const api = axios.create({
+  baseURL: "http://127.0.0.1:8000",
+});
 
-export const listarUsers = async () => {
-  const response = await axios.get(API_URL);
-  return response.data;
-};
+// CRUD USERS
+export const listarUsers = () => api.get("/api/users/");
+export const criarUser = (data) => api.post("/api/users/", data);
+export const atualizarUser = (id, data) => api.put(`/api/users/${id}/`, data);
+export const deletarUser = (id) => api.delete(`/api/users/${id}/`);
 
-export const deletarUser = async (id) => {
-  await axios.delete(`${API_URL}${id}/`);
-};
-
-export const atualizarUser = async (id, dados) => {
-  const formData = new FormData();
-
-  Object.keys(dados).forEach((key) => {
-    if (dados[key]) {
-      formData.append(key, dados[key]);
-    }
-  });
-
-  const response = await axios.put(
-    `${API_URL}${id}/`,
-    formData
-  );
-
-  return response.data;
-};
-
-export default {
-  listarUsers,
-  deletarUser,
-  atualizarUser,
-};
+export default api;
