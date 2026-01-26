@@ -15,5 +15,6 @@ urlpatterns = [
 
     path('api/users/', views.user_list_create),
     path('api/users/<int:id>/', views.user_detail),
+    path("api/token/", views.CustomTokenView.as_view()),
 
 ]

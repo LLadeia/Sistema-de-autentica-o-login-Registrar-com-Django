@@ -1,4 +1,4 @@
-import Form from "../components/Form.jsx";
+import Form from "./components/Form.jsx";
 import { Link } from "react-router-dom";
 
 function Login() {
@@ -9,7 +9,7 @@ function Login() {
 
   
   <div>
-  <Link to="/Home">Ir para Home</Link>
+  <Link to="/">Ir para Home</Link>
   <Link to="/Registrar">Ir para Registrar</Link>
   </div>
   </div>

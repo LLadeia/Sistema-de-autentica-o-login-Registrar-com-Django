@@ -9,7 +9,13 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .serializers import UserSerializer
+from .serializers import CustomTokenSerializer
 from django.http import JsonResponse
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class CustomTokenView(TokenObtainPairView):
+    serializer_class = CustomTokenSerializer
 
 # Home pública
 def home(request):

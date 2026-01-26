@@ -31,7 +31,7 @@ function Registrar() {
       <button disabled={loading}>Registrar</button>
 
     <div>
-    <Link to="/Home">Ir para Home</Link>
+    <Link to="/">Ir para Home</Link>
     <Link to="/Login">Ir para Login</Link>
     </div>
     </div>

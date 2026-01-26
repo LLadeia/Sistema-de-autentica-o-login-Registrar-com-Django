@@ -4,17 +4,36 @@ import useForm from "../components/useForm";
 
 function Form({ route, method }) {
   const navigate = useNavigate();
-    navigate("success");
 
-  const onSubmit = async (data) => {
-    const res = await api.post(route, data);
+ const onSubmit = async (data) => {
+  const res = await api.post(route, data);
+
+  if (method === "login") {
+    const { access, refresh } = res.data;
+
+    localStorage.setItem("ACCESS_TOKEN", access);
+    localStorage.setItem("REFRESH_TOKEN", refresh);
+
+    // POR ENQUANTO: todo mundo como user
+    localStorage.setItem("USER_ROLE", "user");
+
+    navigate("/");
+  }
+
+
 
     if (method === "login") {
-      localStorage.setItem("ACCESS_TOKEN", res.data.access);
-      localStorage.setItem("REFRESH_TOKEN", res.data.refresh);
-      navigate("/");
-    } else {
-      navigate("/login");
+      const { access, refresh, user } = res.data;
+
+      localStorage.setItem("ACCESS_TOKEN", access);
+      localStorage.setItem("REFRESH_TOKEN", refresh);
+      localStorage.setItem("USER_ROLE", user.is_staff ? "admin" : "user");
+
+      if (user.is_staff) {
+        navigate("/admin");
+      } else {
+        navigate("/sucess");
+      }
     }
   };
 
@@ -31,13 +50,14 @@ function Form({ route, method }) {
 
   return (
     <form onSubmit={handleSubmit} className="form-container">
-      <h1>{method === "login" ? "Login" : "Register"}</h1>
+      <h1>Login</h1>
 
       <input
         name="username"
         value={values.username}
         onChange={handleChange}
         placeholder="Username"
+        required
       />
 
       <input
@@ -46,14 +66,17 @@ function Form({ route, method }) {
         value={values.password}
         onChange={handleChange}
         placeholder="Password"
+        required
       />
 
       {error && <p>Erro ao enviar</p>}
+
       <button disabled={loading}>
-        {loading ? "Carregando..." : "Enviar"}
+        {loading ? "Carregando..." : "Entrar"}
       </button>
     </form>
   );
 }
+
 
 export default Form;
