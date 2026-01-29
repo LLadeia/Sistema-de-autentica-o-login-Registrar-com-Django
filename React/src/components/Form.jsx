@@ -5,35 +5,25 @@ import useForm from "../components/useForm";
 function Form({ route, method }) {
   const navigate = useNavigate();
 
- const onSubmit = async (data) => {
-  const res = await api.post(route, data);
+  const onSubmit = async (data) => {
+    try {
+      const res = await api.post(route, data);
 
-  if (method === "login") {
-    const { access, refresh } = res.data;
-
-    localStorage.setItem("ACCESS_TOKEN", access);
-    localStorage.setItem("REFRESH_TOKEN", refresh);
-
-    // POR ENQUANTO: todo mundo como user
-    localStorage.setItem("USER_ROLE", "user");
-
-    navigate("/");
-  }
-
-
-
-    if (method === "login") {
-      const { access, refresh, user } = res.data;
+      if (method === "login") {
+        const { access, refresh, user } = res.data;
 
       localStorage.setItem("ACCESS_TOKEN", access);
       localStorage.setItem("REFRESH_TOKEN", refresh);
-      localStorage.setItem("USER_ROLE", user.is_staff ? "admin" : "user");
+       localStorage.setItem("USER_ROLE", user.is_staff || user.is_superuser ? "admin" : "user");
 
-      if (user.is_staff) {
-        navigate("/admin");
-      } else {
-        navigate("/sucess");
+          if (user.is_superuser || user.is_staff) {
+          navigate("/admin");
+        } else {
+          navigate("/sucess");
+        }
       }
+    } catch (err) {
+      alert("Usuário ou senha inválidos");
     }
   };
 

@@ -1,4 +1,4 @@
-import Form from "./components/Form.jsx";
+import Form from "../components/form.jsx";
 import { Link } from "react-router-dom";
 
 function Login() {
